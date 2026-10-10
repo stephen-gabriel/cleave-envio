@@ -10,7 +10,9 @@ chains:
   - id: 10143
     rpc:
       - url: "https://testnet-rpc.monad.xyz"
-        for: "sync"
+        for: "fallback"
+    hypersync_config:
+      url: "https://monad-testnet.hypersync.xyz"
     start_block: 69097595
     contracts:
       - name: DividendOracle
