@@ -1,0 +1,41 @@
+# yaml-language-server: $schema=./node_modules/envio/evm.schema.json
+name: cleave-indexer
+description: Cleave Series A indexer (Monad testnet chain 10143)
+disable_default_cross_chain: true
+field_selection:
+  transaction_fields:
+    - hash
+    - from
+chains:
+  - id: 10143
+    rpc:
+      - url: "https://testnet-rpc.monad.xyz"
+        for: "sync"
+    start_block: 69097595
+    contracts:
+      - name: DividendOracle
+        address: "0x1f6ce6F6C0f24d7b93A56982988e7F274860e8Cc"
+        start_block: 69097595
+        events:
+          - event: DividendDeclared(uint64 indexed id, uint256 seq, uint256 amountPerShare, uint256 refPrice, uint64 exAt, uint8 source)
+      - name: Splitter
+        address: "0x042D56AcC5b0223930350B41F0FCdAF439480370"
+        start_block: 69107200
+        events:
+          - event: Split(address indexed user, uint256 amount)
+          - event: Merge(address indexed user, uint256 amount)
+          - event: Redeem(address indexed user, uint256 amount)
+          - event: DividendDistributed(uint64 indexed id, uint256 total, uint256 supply, address caller)
+      - name: SplitToken
+        address: "0x6615F732F278e78BB321FE89342488cf4D139DCe"
+        start_block: 69107200
+        events:
+          - event: Claimed(address indexed account, uint256 amount)
+      - name: Pool
+        address:
+          - "0xF0e425305c2F96995a055583876F0Ab85581e72c"
+          - "0x0995F279Ed01F6A1019dc1d37570b7DDD783533c"
+        start_block: 69107205
+        events:
+          - event: Swap(address indexed trader, bool isBuy, uint256 amountToken, uint256 amountQuote, uint256 fee, uint256 reserveToken, uint256 reserveQuote)
+          - event: LiquidityChanged(address indexed provider, bool added, uint256 tokenAmt, uint256 quoteAmt, uint256 shares, uint256 reserveToken, uint256 reserveQuote)

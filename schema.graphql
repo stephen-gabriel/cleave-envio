@@ -1,0 +1,119 @@
+type Account {
+  id: ID!
+  firstSeenAt: Int!
+  isSimulated: Boolean!
+  splitVolume: BigInt!
+  tradeVolumeUsd: BigInt!
+  tradeCount: Int!
+  dividendsClaimed: BigInt!
+}
+
+type Pool {
+  id: ID!
+  kind: String!
+  reserveToken: BigInt!
+  reserveQuote: BigInt!
+  lastPrice: BigDecimal!
+  volumeUsd: BigInt!
+  tradeCount: Int!
+}
+
+type Swap {
+  id: ID!
+  pool: Pool!
+  trader: String!
+  isBuy: Boolean!
+  amountToken: BigInt!
+  amountQuote: BigInt!
+  price: BigDecimal!
+  timestamp: Int!
+  isSimulated: Boolean!
+  txHash: String!
+}
+
+type PoolHourly {
+  id: ID!
+  pool: Pool!
+  hour: Int!
+  open: BigDecimal!
+  high: BigDecimal!
+  low: BigDecimal!
+  close: BigDecimal!
+  volumeUsd: BigInt!
+  trades: Int!
+}
+
+type SplitEvent {
+  id: ID!
+  user: String!
+  amount: BigInt!
+  isMerge: Boolean!
+  kind: String!
+  timestamp: Int!
+  isSimulated: Boolean!
+  txHash: String!
+}
+
+type DividendDeclaration {
+  id: ID!
+  seq: BigInt!
+  amountPerShare: BigInt!
+  refPrice: BigInt!
+  exAt: Int!
+  declaredAt: Int!
+  source: String!
+  txHash: String!
+  distributed: Boolean!
+  distributedAt: Int
+  totalPaid: BigInt
+  supplyAtDistribution: BigInt
+}
+
+type DividendClaim {
+  id: ID!
+  account: String!
+  amount: BigInt!
+  timestamp: Int!
+  txHash: String!
+}
+
+type LiquidityEvent {
+  id: ID!
+  pool: Pool!
+  provider: String!
+  added: Boolean!
+  tokenAmt: BigInt!
+  quoteAmt: BigInt!
+  timestamp: Int!
+  txHash: String!
+}
+
+type ProtocolStats {
+  id: ID!
+  totalSplit: BigInt!
+  totalMerged: BigInt!
+  totalRedeemed: BigInt!
+  tradeCount: Int!
+  volumeUsd: BigInt!
+  simulatedVolumeUsd: BigInt!
+  organicVolumeUsd: BigInt!
+  uniqueAccounts: Int!
+  organicAccounts: Int!
+  dividendsDeclared: Int!
+  dividendsDistributed: Int!
+  dividendsPaidUsd: BigInt!
+}
+# One ordered feed across event kinds; amounts retain their on-chain 18 decimals.
+type Activity {
+  id: ID!
+  kind: String!
+  account: String! @index
+  pool: String
+  amount: BigInt!
+  quoteAmount: BigInt
+  timestamp: Int! @index
+  blockNumber: Int!
+  logIndex: Int!
+  txHash: String!
+  isSimulated: Boolean!
+}
