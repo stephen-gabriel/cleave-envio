@@ -1,7 +1,7 @@
 ﻿import { BigDecimal, indexer, type EvmOnEventContext, type Account, type Pool, type ProtocolStats } from 'envio'
 import { walletClassifier } from '../simulation'
-import simulated from '../../../config/sim-wallets.json'
-import deployment from '../../../deployments/monad-testnet.json'
+import simulated from '../config/sim-wallets.json'
+import deployment from '../config/monad-testnet.json'
 
 type Context = EvmOnEventContext
 type EventMeta = {
